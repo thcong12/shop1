@@ -1,0 +1,20 @@
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-sm-7 d-flex flex-column gap-2 text-center">
+        </div>
+        <form class="col-sm-5 d-flex flex-column gap-2 text-center" [formGroup]="registerForm" (submit)="registerSubmit()">
+            <h1>Register</h1>
+            <input class="form-control" type="text" [formControlName]="controlRegister.userName" placeholder="User Name" />
+            <input class="form-control" type="text" [formControlName]="controlRegister.email" placeholder="Email" />
+            <input class="form-control" type="password" [formControlName]="controlRegister.password" placeholder="Password" />
+            <input class="form-control" type="text" [formControlName]="controlRegister.fullName" placeholder="First name" />
+            <input class="form-control" type="text" [formControlName]="controlRegister.phoneNumber" placeholder="Phone Number" />
+            <button class="btn btn-primary" type="submit">Login</button>
+            <div class="d-flex justify-content-center gap-2">
+                <button class="btn bi bi-google" type="button"></button>
+                <button class="btn bi bi-facebook" type="button"></button>
+                <button class="btn bi bi-telegram" type="button"></button>
+            </div>
+        </form>
+    </div>
+</div>

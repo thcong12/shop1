@@ -1,0 +1,106 @@
+<div class="container row pt-5 productPage">
+    <div class="col-9 productPage__products">
+        <div class="row d-flex justify-content-between">
+            <div class="col-auto">
+                <select [(ngModel)]="sortSelect.value" class="form-control">
+          <option [ngValue]="-1">Select field to sort</option>
+          <option *ngFor="let item of sortOptions" [ngValue]="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+            </div>
+            <div class="col-auto">
+                <input class="form-control" #input type="text" />
+            </div>
+
+            <div class="col-auto d-flex align-items-center gap-1">
+                <button class="btn bg-light bi bi-grid"></button>
+                <button class="btn bg-light bi bi-list"></button>
+            </div>
+        </div>
+        <div class="row d-flex flex-wrap">
+            <div class="col-3 d-flex flex-column gap-2" *ngFor="
+          let item of listProduct.slice((page-1)*(numberProduct), page*(numberProduct))
+            | sortList: sortSelect?.value
+        " [routerLink]="['/products/detail',item._id]">
+                <div class="">
+                    <img width="100%" height="100%" [src]="item.imgX.url + '?h=854&resize=1&w=640'" />
+                </div>
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                    <a class="fs-6" style="color: #eeeeee; text-decoration: none">{{
+            item.productName
+          }}</a>
+                    <button style="background-color: #ff8503; color: #eeeeee" class="btn bi bi-cart"></button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <b style="
+              color: #eeeeee;
+              background-color: #00adb5;
+              padding: 2% 3%;
+              border-radius: 5px;
+            ">{{ item.sale.salePersent }}%</b
+          >
+          <h4 style="color: #eeeeee" class="mt-2">
+            {{
+              item.price - (item.price * item.sale.salePersent) / 100
+                | currency: "USD"
+            }}
+            <del> {{ item.price | currency: "USD" }}</del>
+          </h4>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center gap-2">
+        <span style="color: #eeeeee" class="btn p2"  (click)="changePage(page -1)"> Prev </span>
+        <div class="d-flex gap-2 justify-content-center" #numberPage>
+
+        </div>
+        <span style="color: #eeeeee" class="btn p2" (click)="changePage(page +1)"> Next </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 flex flex-column gap-3 productPage__filter">
+    <div class="col-12 p-3 productPage__filter__price">
+      <h1>PRICE FILTER</h1>
+      <h3 class="px-3 py-2">
+        Price: {{ "$ " + rangeValues[0] + " - $ " + rangeValues[1] }}
+      </h3>
+      <p-slider
+        [(ngModel)]="rangeValues"
+        [range]="true"
+        [style]="{ 'background-color': 'black' }"
+      ></p-slider>
+      <button class="mt-3 py-2 px-3" type="button ">Search</button>
+    </div>
+    <div class="col-12 p-3 productPage__filter__categlory">
+      <h1>Tag</h1>
+      <p-dropdown
+        [options]="listCateglory"
+        optionLabel="name "
+        [filter]="true"
+        filterBy="name "
+        [showClear]="true"
+        placeholder="Select a Country "
+      >
+        <!-- <ng-template pTemplate="selectedItem ">
+            <div class="country-item country-item-value ">
+                <div></div>
+            </div>
+        </ng-template> -->
+        <ng-template let-cate pTemplate="item ">
+          <div class="country-item">
+            <div>{{ cate.cateName }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <div class="ps-2 mt-3 grid gap-1">
+        <p-chip
+          *ngFor="let item of listCateglory"
+          [label]="item.cateName"
+          [removable]="true"
+          [style]="{ 'border-radius': '0' }"
+        ></p-chip>
+      </div>
+    </div>
+    <div class="col-12 productPage__filter__tag"></div>
+  </div>
+</div>
